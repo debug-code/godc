@@ -13,6 +13,6 @@ func Users() ([]models.User, error) {
 		fmt.Println(mdb.Error.Error())
 		return nil, mdb.Error
 	}
-	//mdb.Close()
+
 	return users, nil
 }
