@@ -1,23 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"godc/db"
 	"godc/routers"
 )
 
 func init() {
-	db, err := gorm.Open("mariadb",
-		"alex:123qwe=-0@/controllers?charset=utf8mb4&parseTime=True&loc=Local")
-	if err != nil {
-		fmt.Println(err)
-		return
-	} else {
-		fmt.Println("connection succedssed")
-	}
-	defer db.Close()
+	//初始化数据库
+	db.DbInit()
 }
 func main() {
 	// 初始化引擎
