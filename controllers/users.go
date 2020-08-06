@@ -5,12 +5,11 @@ import (
 	"godc/models"
 	"godc/service"
 
-	"godc/common/vo"
-
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
 
+// Users list
 func Users(ctx *gin.Context) {
 	users, err := service.Users()
 	if err != nil {
@@ -18,11 +17,11 @@ func Users(ctx *gin.Context) {
 	}
 
 	fmt.Println(users)
-	vo.Success(ctx, users)
-
+	// vo.Success(ctx, users)
 	return
 }
 
+// UserAdd create user
 func UserAdd(ctx *gin.Context) {
 	fmt.Print("UserAdd")
 	db, err := gorm.Open("dbMysql",
@@ -30,9 +29,8 @@ func UserAdd(ctx *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		return
-	} else {
-		fmt.Println("connection succedssed")
 	}
+	fmt.Println("connection succedssed")
 	defer db.Close()
 
 	user := models.User{Uid: "sdsf", UName: "sdf"}

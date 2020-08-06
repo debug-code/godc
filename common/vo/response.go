@@ -6,4 +6,6 @@ import (
 
 func Success(ctx *gin.Context, res interface{}) {
 	ctx.JSON(200, res)
+
+	return
 }

@@ -1,5 +1,6 @@
 package models
 
+// User PO
 type User struct {
 	Id          int    `json:"id" gorm:"primary_key column:id"`
 	Uid         string `json:"uid" gorm:"column:uid"`
