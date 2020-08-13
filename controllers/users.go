@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"godc/common/vo"
 	"godc/models"
 	"godc/service"
 
@@ -16,8 +17,7 @@ func Users(ctx *gin.Context) {
 		ctx.JSON(200, map[string]string{"error": err.Error()})
 	}
 
-	fmt.Println(users)
-	// vo.Success(ctx, users)
+	vo.Success(ctx, users)
 	return
 }
 

@@ -1,6 +1,6 @@
 package models
 
-// Article PO
+// Article PO ,DTO
 type Article struct {
 	Id         int    `json:"id" gorm:"primary_key column:id"`
 	Uid        string `json:"uid" gorm:"column:uid"`
