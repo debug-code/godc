@@ -8,4 +8,5 @@ type Article struct {
 	Title      string `json:"title" gorm:"column:title"`
 	CreateTime int64  `json:"createTime" gorm:"column:createTime"`
 	UpdateTime int64  `json:"updateTime" gorm:"column:updateTime"`
+	Del        int    `json:"del" gorm:"column:del"`
 }

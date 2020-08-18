@@ -2,9 +2,13 @@ package controllers
 
 import (
 	"fmt"
+	"godc/common/tool"
 	"godc/common/vo"
 	"godc/models"
 	"godc/service"
+	"strings"
+
+	"debug-code.com/dclog"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,21 +16,32 @@ import (
 // Articles list
 func Articles(this *gin.Context) {
 	uid := this.Param("id")
+	dclog.Info(uid)
 	if uid != "" {
 
-		article, err := service.ArticlesOne(uid)
+		article, err := service.ArticleOne(uid)
 		if err != nil {
+			dclog.Error(err)
 			this.JSON(200, map[string]string{"error": err.Error()})
 			return
 		}
 		vo.Success(this, article)
 		return
 	}
-	// page := tool.PageSize(
-	// 	this.Query("pageNum"),
-	// 	this.Query("pageSize"))
+	page := tool.PageSize(
+		this.Query("pageNum"),
+		this.Query("pageSize"))
 
-	vo.Success(this, "OK")
+	article := models.Article{}
+
+	res, err := service.Articles(article, page)
+	if err != nil {
+		dclog.Error(err)
+		this.JSON(200, map[string]string{"error": err.Error()})
+		return
+	}
+
+	vo.Success(this, res)
 	return
 }
 
@@ -42,6 +57,7 @@ func ArticleAdd(this *gin.Context) {
 	fmt.Println(articleDto)
 	err = service.ArticlesAdd(articleDto)
 	if err != nil {
+
 		this.JSON(200, map[string]string{"error": err.Error()})
 		return
 	}
@@ -56,8 +72,27 @@ func ArticleModify(this *gin.Context) {
 	return
 }
 
-// ArticleDelete  modify article
+// ArticleDelete  delete  article
 func ArticleDelete(this *gin.Context) {
+	flag := this.Query("flag")
+	ids := this.Query("ids")
+	if ids == "" {
+		vo.Success(this, "Fail")
+		return
+	}
+	flagBool := false
+	if flag != "" {
+		flagBool = true
+	}
+	arr := strings.Split(ids, ",")
+
+	err := service.ArticlesDel(arr, flagBool)
+	if err != nil {
+		dclog.Error(err)
+		vo.Success(this, "Fail")
+		return
+	}
 	vo.Success(this, "OK")
 	return
+
 }
